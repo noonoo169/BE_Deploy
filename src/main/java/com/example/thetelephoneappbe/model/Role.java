@@ -3,8 +3,7 @@ package com.example.thetelephoneappbe.model;
 
 import com.example.thetelephoneappbe.enums.ERole;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
@@ -14,7 +13,9 @@ import java.util.Set;
 
 @Entity
 @Table(name = "role")
+
 @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
+
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -67,6 +68,15 @@ public class Role {
     @Override
     public int hashCode() {
         return Objects.hash(id, name);
+    }
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "id=" + id +
+                ", name=" + name +
+                ", users=" + users +
+                '}';
     }
 }
 

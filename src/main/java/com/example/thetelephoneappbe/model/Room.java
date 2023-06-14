@@ -2,19 +2,22 @@ package com.example.thetelephoneappbe.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.HashSet;
+
+import java.util.Set;
 
 @Entity
 @Table(name = "room")
 
 
+
 @JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
+
 
 public class Room {
     @Id
@@ -24,10 +27,7 @@ public class Room {
     @Column(name = "status")
     private String status;
     @OneToMany(mappedBy = "room")
-//    @JsonManagedReference
-//    @JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
-
-    private List<User> users = new ArrayList<>();
+    Set<User> users = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -45,13 +45,22 @@ public class Room {
         this.status = status;
     }
 
-    /*public List<User> getUsers() {
+    public Set<User> getUsers() {
         return users;
     }
 
-    public void setUsers(List<User> users) {
+    public void setUsers(Set<User> users) {
         this.users = users;
-    }*/
+    }
+
+    @Override
+    public String toString() {
+        return "Room{" +
+                "id=" + id +
+                ", status='" + status + '\'' +
+
+                '}';
+    }
 }
 
 
