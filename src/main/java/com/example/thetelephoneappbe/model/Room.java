@@ -1,12 +1,21 @@
 package com.example.thetelephoneappbe.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "room")
+
+
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
+
 public class Room {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,6 +24,9 @@ public class Room {
     @Column(name = "status")
     private String status;
     @OneToMany(mappedBy = "room")
+//    @JsonManagedReference
+//    @JsonIdentityInfo(generator= ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
+
     private List<User> users = new ArrayList<>();
 
     public Long getId() {
