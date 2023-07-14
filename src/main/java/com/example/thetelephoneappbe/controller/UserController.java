@@ -67,8 +67,7 @@ public class UserController {
             User userNew = new User();
             userNew.setId_image(id_avatar);
             userNew.setNickname(userName);
-            Room room = roomService.getAllRoom().stream().filter(room1 -> room1.getId().equals(idRoom)).findFirst().orElseThrow();
-            userNew.setRoom(room);
+            userNew.setRoom(roomPlay);
             Role role = roleService.getAllRole().stream().filter(role1 -> role1.getName().equals(ROLE_USER)).findFirst().orElseThrow();
             userNew.getRoles().add(role);
 
