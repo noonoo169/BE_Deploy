@@ -86,13 +86,13 @@ public class UserController {
                     User userNew = new User();
                     userNew.setId_image(id_avatar);
                     userNew.setNickname(userName);
-                    Room room = roomService.getAllRoom().stream()
-                                .filter(room1 -> room1.getId()
-                                .equals(idRoom))
-                                .findFirst()
-                                .orElseThrow();
+//                    Room room = roomService.getAllRoom().stream()
+//                                .filter(room1 -> room1.getId()
+//                                .equals(idRoom))
+//                                .findFirst()
+//                                .orElseThrow();
 
-                    userNew.setRoom(room);
+                    userNew.setRoom(roomPlay);
                     Role role = roleService.getAllRole().stream().filter(role1 -> role1.getName()
                             .equals(ROLE_USER)).findFirst().orElseThrow();
 
@@ -105,6 +105,7 @@ public class UserController {
 
                     return ResponseEntity.ok(gson.toJson(gson.fromJson(roomPlay.getUsers().toString(), Object.class)));
                 } catch (Exception exception) {
+                    System.out.println("Duplicate");
                     return ResponseEntity.ok(NAME_DUPLICATE);
                 }
 
@@ -132,7 +133,7 @@ public class UserController {
         roomService.SaveRoom(playRoom);
         userToDelete.setRoom(null);
         userService.saveUser(userToDelete);
-        playRoom.getUsers().stream().forEach(user -> System.out.println(user));
+//        playRoom.getUsers().stream().forEach(user -> System.out.println(user));
         playRoom.setStatus(Status.NEW.getValue());
         simpMessagingTemplate.convertAndSend(
                 PREFIX + roomId,
