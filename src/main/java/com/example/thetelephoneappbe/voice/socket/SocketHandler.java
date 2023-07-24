@@ -39,7 +39,16 @@ public class SocketHandler {
     public void onDisconnect(SocketIOClient client) {
         String roomId = roomIdUserNames.get(client.getSessionId().toString()).getRoomID();
         String id = client.getSessionId().toString();
-        server.getRoomOperations(roomId).sendEvent("user left",  id);
+//        server.getRoomOperations(roomId).sendEvent("user left",  id);
+//        client.getNamespace().getBroadcastOperations().sendEvent("user left",  id);
+//        for(String clientId :  usersIdRooms.get(roomId)){
+//            server.getClient(UUID.fromString(clientId))
+//                    .sendEvent("user left",  id);
+//        }
+//        server.getBroadcastOperations().sendEvent("user left",  id);
+//        client.sendEvent("user left",  id);
+//        client.getNamespace().getRoomOperations(roomId).sendEvent("user left",  id);
+        client.leaveRoom(roomId);
         System.out.println("Client " + client.getSessionId() + " leave room " + roomId);
         users.remove(client.getSessionId().toString());
         roomIdUserNames.remove(client.getSessionId().toString());
@@ -56,7 +65,7 @@ public class SocketHandler {
 
     @OnEvent("kick out")
     public void onKickOut(SocketIOClient client, RoomIdUserName roomIdUserName){
-        for (String clientId:usersIdRooms.get(roomIdUserName.getRoomID())) {
+        for (String clientId : usersIdRooms.get(roomIdUserName.getRoomID())) {
             if(roomIdUserNames.get(clientId).getUserName().equals(roomIdUserName.getUserName())){
                 System.out.println("clientId Kick: "+ clientId);
                 server.getClient(UUID.fromString(clientId))
