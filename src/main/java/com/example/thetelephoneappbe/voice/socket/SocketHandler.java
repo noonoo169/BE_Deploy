@@ -23,6 +23,7 @@ public class SocketHandler {
     private static final Map<String, RoomIdUserName> roomIdUserNames = new HashMap<>();
     private static final Map<String, List<String>> usersIdRooms = new HashMap<>(); 
 
+
     public SocketHandler(SocketIOServer server) {
         this.server = server;
         server.addListeners(this);
